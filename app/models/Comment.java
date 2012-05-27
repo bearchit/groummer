@@ -9,7 +9,7 @@ import play.db.jpa.*;
 public class Comment extends Model {
 
   @ManyToOne
-  public User author;
+  public User user;
 
   @Lob
   public String content;
@@ -19,9 +19,9 @@ public class Comment extends Model {
 
   public Date createdAt;
 
-  public Comment(Post post, User author, String content) {
+  public Comment(Post post, User user, String content) {
     this.post = post;
-    this.author = author;
+    this.user = user;
     this.content = content;
     this.createdAt = new Date();
   }

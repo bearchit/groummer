@@ -1,12 +1,56 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
 
 <h2>Timeline</h2>
 
 <div id="timeline">
-#{list items:posts, as:'post'}
-    <span class="post-author">${post.author.fullname}</span>
-    <span class="post-content">${post.content}</span>
-    <span class="post-date">${post.createdAt}</span>
-#{/list}  
+
+  <div id="post">
+    #{form @Application.post()}
+    <p>
+      <label for="email">Your email: </label>
+      <input type="text" name="email" id="email" />
+    </p>
+    <p>
+      <label for="content">Your post: </label>
+      <textarea name="content" id="content"></textarea>
+    </p>
+    <p>
+      <input type="submit" value="Post" />
+    </p>
+    #{/form}
+  </div> 
+
+  <div id="post">
+    #{list items:posts, as:'post'}
+
+    <!-- Metadata -->
+    <div class="post-metadata">
+      <div>
+        <span class="post-author">${post.user.fullname}</span>
+        <span class="post-date">${post.createdAt}</span>
+      </div>
+    </div> 
+
+    <!-- Contents -->
+    <div>
+      <span class="post-content">${post.content}</span>
+    </div>
+
+    <!-- Comments -->
+    <div class="comments">
+      #{list items:post.comments, as:'comment'}
+      <div class="comment-metadata">
+        <span class="comment-author">${comment.user.fullname}</span>
+        <span class="comment-date">${comment.createdAt}</span>
+      </div>
+
+      <div class="comment-content">
+        ${comment.content.escape().nl2br()}
+      </div> 
+      #{/list}
+    </div>
+  </div> 
+  
+  #{/list}  
+
 </div>

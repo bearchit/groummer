@@ -1,0 +1,27 @@
+# Test data
+
+User(bearchit):
+  email:        bearchit@gmail.com
+  password:     secret
+  fullname:     Mingoo Kim
+
+User(jspark):
+  email:        js_park@gmail.com
+  password:     manu
+  fullname:     Jisung Park
+    
+Post(firstBearchitPost):
+  user:         bearchit
+  content:      Hello, World
+  createdAt:    2012-05-25
+
+Post(firstJsPost):
+  user:         jspark
+  content:      공간을 지배하는 자
+  createdAt:    2012-05-27
+
+Comment(c1):
+  user:         bearchit
+  content:      Good
+  createdAt:    2012-05-26
+  post:         firstBearchitPost
