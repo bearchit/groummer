@@ -21,65 +21,54 @@
 		}
 	}
 	
-	function sign_in(){
-		var nickname = $('#sign_in_nickname').val();
-		var pwd = $('#sign_in_pwd').val();
-		$.ajax({
-            url: "/users/sign_in",
-            type: 'GET',
-            data: 'nickname='+ nickname + '&pwd=' + pwd,
-            error: function(){
-                return false;
-            },
-            success: function(data){
-            	$('#sign_form').html(data);
-            }
-       	});
-	}
-	
-	function sign_out(){
-		$.ajax({
-            url: "/users/sign_out",
-            type: 'GET',
-            error: function(){
-                return false;
-            },
-            success: function(data){
-            	$('#sign_form').html(data);
-            }
-       	});
-	}
-	
-	function status_select(){
-		$.ajax({
-            url: "/users/status_select",
-            type: 'POST',
-            data: 'status_id=' + $('#status_select').val(),
-            error: function(){
-                return false;
-            },
-            success: function(data){
-            	$('#sign_form').html(data);
-            }
-       	});
-	}
-	
-	
 	function sign_up_form(){
 		var form = '<h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" id="sign_up_nickname" /></p><p>실제이름 <input type="text" id="sign_up_fullname" /></p><p>비밀번호 <input type="text" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="text" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div>';
 		$('#sign_form').html(form);
 	}
+	
+	#{if current_user}
+		function status_select(){
+			var status_id = $('#status_select').val();
+			var user_id = ${current_user.id};
+			if(status_id == undefined){
+				alert('감정을 선택해주세요');	
+			}else{
+				$.ajax({
+		            url: "/users/status_select",
+		            type: 'POST',
+		            data: 'user_id=' + user_id + '&status_id=' + status_id ,
+		            error: function(){
+		                return false;
+		            },
+		            success: function(data){
+		            	$('#sign_form').html(data);
+		            }
+		       	});	
+			}
+		}
+	#{/if}
+	
 </script>
 
 #{extends 'main.html' /}
 <div style="height: 260px; border-bottom: 1px solid #c5c5c5;">
 	<div style="float: left;">
 		#{list items:users, as:'user'}
-		<p>${user.nickname}(${user.fullname})</p>
+		<p>	
+			${user.nickname} ${user.id}
+			#{if user.status}
+				( <span id="status_user_${user.id}">${user.status.status}</span> )
+			#{/if}
+		</p>
 		#{/list}
 	</div>
 	<div id="sign_form"style="float: right; padding-left: 20px; border-left: 1px solid #c5c5c5; text-align: right;">
-		 #{include 'Application/sign_in.html' /}
+		 #{if current_user == null}
+		 	#{include 'Secure/login.html' /}
+		 #{/if}
+		 #{else}
+		 	#{include 'Secure/logon.html' /}
+		 #{/else}
 	</div>
 </div>
 

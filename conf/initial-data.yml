@@ -31,3 +31,11 @@ Status(happy):
   
 Status(sad):
   status : 슬픔  
+
+Status(tired):
+  status : 피곤함
+  
+Status(glad):
+  status : 기쁘다  
+  
+  

@@ -24,14 +24,14 @@ public class User extends Model {
   @ManyToOne
 	public Status status;
 
-  public User(String nickname, String fullname, String password) {
+  public User(String nickname, String fullname, String pwd) {
     this.nickname = nickname;
-    this.password = Crypto.passwordHash(password);
+    this.password = Crypto.passwordHash(pwd);
     this.fullname = fullname;
   }
 
-  public static User connect(String nickname, String password) {
-	String hash_pwd = Crypto.passwordHash(password);
-    return find("byNicknameAndPassword", nickname, hash_pwd).first();
+  public static User connect(String nickname, String pwd) {
+	String password = Crypto.passwordHash(pwd);
+    return find("byNicknameAndPassword", nickname, password).first();
   }
 }

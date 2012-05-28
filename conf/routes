@@ -2,19 +2,16 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Import Secure routes
+*       /                                       module:secure
 # Home page
 GET     /                                       Application.index
 
-POST     /users/sign_up                Application.sign_up
+POST     /users/sign_up                Users.sign_up
 
-GET     /users/sign_in                Application.sign_in
+POST     /users/status_select                Users.status_select
 
-GET     /users/sign_out                Application.sign_out
-
-POST     /users/status_select                Application.status_select
-
-# Import Secure routes
-*       /                                       module:secure
+GET		/users/delete_status					Users.delete_status
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

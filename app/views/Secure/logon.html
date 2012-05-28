@@ -1,0 +1,26 @@
+<h2 style="text-align: left;">${current_user.nickname}님 환영합니다</h2>
+<p>
+	<span>
+		#{if current_user.status }
+			감정 :
+			${current_user.status.status}
+			<a href="users/delete_status" class="btn">변경</a>
+		#{/if}
+		#{else}
+			<form action="/users/status_select" method="post">
+				감정선택 :
+				<select name='status_id' id="status_id" style="width:80px;">
+				<option></option>
+				#{list items:all_status, as:'status'}
+				   <option value='${status.id}'>${status.status}</option>
+				#{/list}   
+				</select>
+				<input type="submit" class="btn" id="signin" value="변경" />
+			</form>
+			
+		#{/else}
+	</span>
+</p>
+<div style="margin-bottom: 10px;">
+	<a href="/logout" class="btn btn-primary">로그아웃</a>
+</div>

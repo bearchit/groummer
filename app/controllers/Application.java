@@ -14,7 +14,17 @@ public class Application extends Controller {
   static void addDefaults() {
     renderArgs.put("appName", Play.configuration.getProperty("application.name"));
   }
-
+  
+  @Before
+  static void setConnectedUser() {
+      if(Security.isConnected()) {
+          User user = User.find("byNickname", Security.connected()).first();
+          renderArgs.put("current_user", user);
+          List<Status> all_status = Status.find("order by status").fetch();
+          renderArgs.put("all_status", all_status);
+      }
+  }
+  
   public static void index() {
     List<Post> posts = Post.find("order by createdAt desc").fetch();
     List<User> users = User.find("order by createdAt desc").fetch();
@@ -27,25 +37,4 @@ public class Application extends Controller {
     index();
   }
   
-  public static void sign_up(String nickname, String fullname, String pwd ) {
-	  User user = new User(nickname, fullname, pwd).save();
-	  List<Status> all_status = Status.find("order by status").fetch();
-	  renderTemplate("Application/sign_on.html", user, all_status);
-  }
-	  
-  public static void sign_in(String nickname, String pwd ) {
-	  User user = User.connect(nickname, pwd);
-	  if(user != null) {
-		  List<Status> all_status = Status.find("order by status").fetch();
-		  renderTemplate("Application/sign_on.html", user, all_status);  
-	  } else{
-		  renderTemplate("Application/sign_in.html");
-	  }
-  }
-  
-  public static void sign_out() {
-	  renderTemplate("Application/sign_in.html");
-  }
-  
-
 }
