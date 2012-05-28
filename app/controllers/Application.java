@@ -32,8 +32,10 @@ public class Application extends Controller {
   }
   
   public static void post(String nickname, String content) {
-    User user = (User)User.find("byNickname", nickname).fetch().get(0);
-    new Post(user, content).save();
+    User user = User.find("byNickname", Security.connected()).first();
+    if(user != null){
+    	new Post(user, content).save();
+    }
     index();
   }
   

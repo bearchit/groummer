@@ -26,28 +26,6 @@
 		$('#sign_form').html(form);
 	}
 	
-	#{if current_user}
-		function status_select(){
-			var status_id = $('#status_select').val();
-			var user_id = ${current_user.id};
-			if(status_id == undefined){
-				alert('감정을 선택해주세요');	
-			}else{
-				$.ajax({
-		            url: "/users/status_select",
-		            type: 'POST',
-		            data: 'user_id=' + user_id + '&status_id=' + status_id ,
-		            error: function(){
-		                return false;
-		            },
-		            success: function(data){
-		            	$('#sign_form').html(data);
-		            }
-		       	});	
-			}
-		}
-	#{/if}
-	
 </script>
 
 #{extends 'main.html' /}
@@ -78,10 +56,6 @@
 
 	<div id="post">
 		#{form @Application.post()}
-		<p>
-			<label for="nickname">Your nickname: </label> <input type="text"
-				name="nickname" id="nickname" />
-		</p>
 		<p>
 			<label for="content">Your post: </label>
 			<textarea name="content" id="content"></textarea>
