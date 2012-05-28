@@ -5,6 +5,17 @@
 # Home page
 GET     /                                       Application.index
 
+POST     /users/sign_up                Application.sign_up
+
+GET     /users/sign_in                Application.sign_in
+
+GET     /users/sign_out                Application.sign_out
+
+POST     /users/status_select                Application.status_select
+
+# Import Secure routes
+*       /                                       module:secure
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
@@ -13,3 +24,5 @@ GET     /public/                                staticDir:public
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
+
+

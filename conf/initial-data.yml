@@ -1,12 +1,12 @@
 # Test data
 
 User(bearchit):
-  email:        bearchit@gmail.com
+  nickname:        bearchit
   password:     secret
   fullname:     Mingoo Kim
 
 User(jspark):
-  email:        js_park@gmail.com
+  nickname:        js_park
   password:     manu
   fullname:     Jisung Park
     
@@ -25,3 +25,9 @@ Comment(c1):
   content:      Good
   createdAt:    2012-05-26
   post:         firstBearchitPost
+  
+Status(happy):
+  status : 행복
+  
+Status(sad):
+  status : 슬픔  

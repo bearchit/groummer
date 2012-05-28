@@ -3,12 +3,14 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import models.User;
+
 import play.db.jpa.*;
+import play.libs.Crypto;
 
 @Entity
 public class User extends Model {
-
-  public String email;
+  public String nickname;
   public String password;
   public String fullname;
 
@@ -18,14 +20,18 @@ public class User extends Model {
   public Blob profileImage;
   public Date createdAt;
   public Date updatedAt;
+  
+  @ManyToOne
+	public Status status;
 
-  public User(String email, String password, String fullname) {
-    this.email = email;
-    this.password = password;
+  public User(String nickname, String fullname, String password) {
+    this.nickname = nickname;
+    this.password = Crypto.passwordHash(password);
     this.fullname = fullname;
   }
 
-  public static User connect(String email, String password) {
-    return find("byEmailAndPassword", email, password).first();
+  public static User connect(String nickname, String password) {
+	String hash_pwd = Crypto.passwordHash(password);
+    return find("byNicknameAndPassword", nickname, hash_pwd).first();
   }
 }
