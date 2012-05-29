@@ -22,26 +22,29 @@
 	}
 	
 	function sign_up_form(){
-		var form = '<h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" id="sign_up_nickname" /></p><p>실제이름 <input type="text" id="sign_up_fullname" /></p><p>비밀번호 <input type="text" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="text" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div>';
+		var form = '<h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" style="width:180px;" id="sign_up_nickname" /></p><p>실제이름 <input type="text" style="width:180px;" id="sign_up_fullname" /></p><p>비밀번호 <input type="password" style="width:180px;" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="password" style="width:180px;" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="/" class="btn" style="margin-right:30px;">로그인</a><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div>';
 		$('#sign_form').html(form);
 	}
 	
 </script>
 
 #{extends 'main.html' /}
-<div style="height: 260px; border-bottom: 1px solid #c5c5c5;">
-	<div style="float: left;">
+<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
+	<div class="span7">
 		#{list items:users, as:'user'}
-		<p>	
-			${user.nickname} ${user.id}
+		<div style="display:inline-block; text-align:center; margin-right:10px;">
+			<img src="@{Users.userPhoto(user.id)}" style="width:80px;" />
+			<br />
+			${user.nickname}
 			#{if user.status}
+			<br />
 				( <span id="status_user_${user.id}">${user.status.status}</span> )
 			#{/if}
-		</p>
+		</div>
 		#{/list}
 	</div>
-	<div id="sign_form"style="float: right; padding-left: 20px; border-left: 1px solid #c5c5c5; text-align: right;">
-		 #{if current_user == null}
+	<div class="span4" id="sign_form" style="text-align:center; padding-left:10px; border-left: 1px solid #c5c5c5;">
+		#{if current_user == null}
 		 	#{include 'Secure/login.html' /}
 		 #{/if}
 		 #{else}
@@ -49,7 +52,6 @@
 		 #{/else}
 	</div>
 </div>
-
 <h2>Timeline</h2>
 
 <div id="timeline">

@@ -24,10 +24,11 @@ public class User extends Model {
   @ManyToOne
 	public Status status;
 
-  public User(String nickname, String fullname, String pwd) {
+  public User(String nickname, String fullname, String pwd, Date current_time) {
     this.nickname = nickname;
     this.password = Crypto.passwordHash(pwd);
     this.fullname = fullname;
+    this.createdAt = current_time;
   }
 
   public static User connect(String nickname, String pwd) {

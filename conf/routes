@@ -11,6 +11,8 @@ POST     /users/sign_up                Users.sign_up
 
 POST     /users/status_select                Users.status_select
 
+POST		/users/profileimage_upload		Users.profileimage_upload
+
 GET		/users/delete_status					Users.delete_status
 
 # Ignore favicon requests

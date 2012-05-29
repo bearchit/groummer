@@ -22,14 +22,14 @@
 	
 		<p id="username-field">
 			닉네임
-			<input type="text" name="username" id="username" value="${flash.username}" />
+			<input type="text" style="width:180px;" name="username" id="username" value="${flash.username}" />
 		</p>
 		<p id="password-field">
 			비밀번호
-			<input type="password" name="password" id="password" value="" />
+			<input type="password" style="width:180px;" name="password" id="password" value="" />
 		</p>
 		<p id="remember-field">
-			<input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
+			<input type="checkbox" style="display:none;" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
 			<a  href="#" onclick="sign_up_form(); return false;" class="btn" style="margin:0 30px 0 30px; text-align: left;">회원가입</a>
 			<input type="submit" class="btn btn-primary" id="signin" value="로그인" />
 		</p>

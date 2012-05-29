@@ -1,26 +1,42 @@
-<h2 style="text-align: left;">${current_user.nickname}님 환영합니다</h2>
-<p>
-	<span>
-		#{if current_user.status }
-			감정 :
-			${current_user.status.status}
-			<a href="users/delete_status" class="btn">변경</a>
-		#{/if}
-		#{else}
-			<form action="/users/status_select" method="post">
-				감정선택 :
-				<select name='status_id' id="status_id" style="width:80px;">
-				<option></option>
-				#{list items:all_status, as:'status'}
-				   <option value='${status.id}'>${status.status}</option>
-				#{/list}   
-				</select>
-				<input type="submit" class="btn" id="signin" value="변경" />
-			</form>
-			
-		#{/else}
-	</span>
-</p>
-<div style="margin-bottom: 10px;">
-	<a href="/logout" class="btn btn-primary">로그아웃</a>
+<div>
+	<div style="font-size:15px; margin-bottom:15px;">
+		${current_user.nickname}님 환영합니다&nbsp;&nbsp;&nbsp;<a href="/logout" class="btn btn-primary">로그아웃</a>
+	</div>
+	<div style="display:inline-block;">
+		<div style="float:left;">
+			<img src="@{Users.userPhoto(current_user.id)}" style="width:100px;" />
+			<br />(프로필 이미지)
+		</div>
+		<div style="float:right;margin-left: 10px;">
+			#{form @Users.profileImage_upload(), enctype:'multipart/form-data'}
+				<a href="#" class="btn" onclick="javascript:document.getElementById('user_profileImage').click(); return false;">이미지 변경</a>
+				<input id="user_profileImage" name="profileImage" style="visibility:hidden; width:1px;" type="file">
+				<br />
+			   <input type="submit" name="submit" class="btn" style="width:90px;" value="등록" />
+			#{/form}
+		</div>
+	</div>
+	<div>
+		<p style="font-size:15px; text-align: left;">
+			<span>
+				#{if current_user.status }
+					감정 :
+					${current_user.status.status}
+					<a href="users/delete_status" class="btn">변경</a>
+				#{/if}
+				#{else}
+					<form action="/users/status_select" method="post" style="margin-bottom:0;">
+						감정선택 :
+						<select name='status_id' id="status_id" style="width:60px; margin-bottom:0; margin-right:20px;">
+						<option></option>
+						#{list items:all_status, as:'status'}
+						   <option value='${status.id}'>${status.status}</option>
+						#{/list}   
+						</select>
+						<input type="submit" class="btn" id="signin" value="변경" />
+					</form>
+				#{/else}
+			</span>
+		</p>
+	</div>	
 </div>

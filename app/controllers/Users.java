@@ -3,8 +3,10 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
+import java.io.File;
 import java.util.*;
 
+import play.db.jpa.*;
 import models.*;
 
 
@@ -23,11 +25,14 @@ public class Users extends Controller {
 	public static void sign_up(String nickname, String fullname, String pwd ) {
 		User user = User.find("byNickname", nickname).first();
 		String success = "";
-		if(user == null){
-			new User(nickname, fullname, pwd).save();
+		if(user == null && !nickname.isEmpty() ){
+			Date current_time = new java.util.Date();
+			new User(nickname, fullname, pwd, current_time).save();
 			success = "회원가입이 완료되었습니다. 로그인 해주세요.";
+		} else if(nickname.isEmpty()){
+			success = "닉네임을 적어주세요";
 		}else{
-			success = "닉네임이 존재합니다";
+			success = "닉네임이 존재";
 		}
 		renderTemplate("Secure/login.html", success);
 	}
@@ -37,6 +42,9 @@ public class Users extends Controller {
 		if(status_id != null ){
 			Status status = Status.findById(status_id);
 			user.status = status;
+			Date current_time = new java.util.Date();
+			user.statusUpdatedAt = current_time;
+			user.updatedAt = current_time;
 			user.save();
 		}
 		Application.index();
@@ -45,8 +53,31 @@ public class Users extends Controller {
 	public static void delete_status(){
 		User user = User.find("byNickname", Security.connected()).first();
 		user.status = null;
+		user.statusUpdatedAt = null;
+		user.updatedAt = new java.util.Date();
 		user.save();
 		Application.index();
 	}
+	
+	public static void userPhoto(long id) {
+	   final User user = User.findById(id);
+	   notFoundIfNull(user);
+	   response.setContentTypeIfNotSet(user.profileImage.type());
+	   if( user.profileImage.get() != null ){
+		   renderBinary(user.profileImage.get());
+	   }else{
+		   File default_image = new File("public/images/default_profile.png");
+		   renderBinary(default_image);
+	   }
+	   
+	}
+	
+	public static void profileImage_upload(Blob profileImage){
+		User user = User.find("byNickname", Security.connected()).first();
+		user.profileImage = profileImage;
+		user.save();
+		Application.index();
+	}
+
 	
 }
