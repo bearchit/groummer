@@ -7,6 +7,8 @@
 # Home page
 GET     /                                       Application.index
 
+POST    /posts/{postId}/comments                Application.postComment
+
 POST     /users/sign_up                Users.sign_up
 
 POST     /users/status_select                Users.status_select

@@ -1,101 +1,118 @@
 <script>
-	function sign_up(){
-		var nickname = $('#sign_up_nickname').val();
-		var fullname = $('#sign_up_fullname').val();
-		var pwd = $('#sign_up_pwd').val();
-		var pwd_confirm = $('#sign_up_pwd_confirm').val();
-		if ( pwd != pwd_confirm ){
-			alert('비밀번호와 비밀번호 확인이 서로 맞지 않습니다');
-		}else{
-			$.ajax({
-	            url: "/users/sign_up",
-	            type: 'POST',
-	            data: 'nickname='+ nickname + '&fullname=' + fullname + '&pwd=' + pwd,
-	            error: function(){
-	                return false;
-	            },
-	            success: function(data){
-	            	$('#sign_form').html(data);
-	            }
-	       	});	
-		}
-	}
-	
-	function sign_up_form(){
-		var form = '<h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" id="sign_up_nickname" /></p><p>실제이름 <input type="text" id="sign_up_fullname" /></p><p>비밀번호 <input type="text" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="text" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div>';
-		$('#sign_form').html(form);
-	}
-	
+  function sign_up(){
+    var nickname = $('#sign_up_nickname').val();
+    var fullname = $('#sign_up_fullname').val();
+    var pwd = $('#sign_up_pwd').val();
+    var pwd_confirm = $('#sign_up_pwd_confirm').val();
+    if ( pwd != pwd_confirm ){
+      alert('비밀번호와 비밀번호 확인이 서로 맞지 않습니다');
+    }else{
+      $.ajax({
+        url: "/users/sign_up",
+        type: 'POST',
+        data: 'nickname='+ nickname + '&fullname=' + fullname + '&pwd=' + pwd,
+        error: function(){
+          return false;
+        },
+        success: function(data){
+          $('#sign_form').html(data);
+        }
+      });
+    }
+  }
+
+function sign_up_form(){
+  var form = '<h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" id="sign_up_nickname" /></p><p>실제이름 <input type="text" id="sign_up_fullname" /></p><p>비밀번호 <input type="text" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="text" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div>';
+  $('#sign_form').html(form);
+}
+
 </script>
 
 #{extends 'main.html' /}
 <div style="height: 260px; border-bottom: 1px solid #c5c5c5;">
-	<div style="float: left;">
-		#{list items:users, as:'user'}
-		<p>	
-			${user.nickname} ${user.id}
-			#{if user.status}
-				( <span id="status_user_${user.id}">${user.status.status}</span> )
-			#{/if}
-		</p>
-		#{/list}
-	</div>
-	<div id="sign_form"style="float: right; padding-left: 20px; border-left: 1px solid #c5c5c5; text-align: right;">
-		 #{if current_user == null}
-		 	#{include 'Secure/login.html' /}
-		 #{/if}
-		 #{else}
-		 	#{include 'Secure/logon.html' /}
-		 #{/else}
-	</div>
+  <div style="float: left;">
+    #{list items:users, as:'user'}
+    <p>
+      ${user.nickname} ${user.id}
+      #{if user.status}
+      ( <span id="status_user_${user.id}">${user.status.status}</span> )
+      #{/if}
+    </p>
+    #{/list}
+  </div>
+  <div id="sign_form"style="float: right; padding-left: 20px; border-left: 1px solid #c5c5c5; text-align: right;">
+    #{if current_user == null}
+    #{include 'Secure/login.html' /}
+    #{/if}
+    #{else}
+    #{include 'Secure/logon.html' /}
+    #{/else}
+  </div>
 </div>
 
 <h2>Timeline</h2>
 
 <div id="timeline">
 
-	<div id="post">
-		#{form @Application.post()}
-		<p>
-			<label for="content">Your post: </label>
-			<textarea name="content" id="content"></textarea>
-		</p>
-		<p>
-			<input type="submit" value="Post" />
-		</p>
-		#{/form}
-	</div>
+  <div id="post">
+    #{form @Application.post()}
+    <p>
+      <label for="content">Your post: </label>
+      <textarea name="content" id="content"></textarea>
+    </p>
+    <p>
+      <input type="submit" value="Post" />
+    </p>
+    #{/form}
+  </div>
 
-	<div id="post">
-		#{list items:posts, as:'post'}
+  <div id="post">
+    #{list items:posts, as:'post'}
 
-		<!-- Metadata -->
-		<div class="post-metadata">
-			<div>
-				<span class="post-author">${post.user.fullname}</span> <span
-					class="post-date">${post.createdAt}</span>
-			</div>
-		</div>
+    <!-- Metadata -->
+    <div class="post-metadata">
+      <div>
+        <span class="post-author">${post.user.fullname}</span>
+        <span class="post-date">${post.createdAt}</span>
+      </div>
+    </div>
 
-		<!-- Contents -->
-		<div>
-			<span class="post-content">${post.content}</span>
-		</div>
+    <!-- Contents -->
+    <div>
+      <span class="post-content">${post.content}</span>
+      <div class="post-actions">
+        <span class="reply"><a href="#" onclick="$('#post-reply_${post.id}').show();">Reply</a></span>
 
-		<!-- Comments -->
-		<div class="comments">
-			#{list items:post.comments, as:'comment'}
-			<div class="comment-metadata">
-				<span class="comment-author">${comment.user.fullname}</span> <span
-					class="comment-date">${comment.createdAt}</span>
-			</div>
+        <div id="post-reply_${post.id}" style="display:none;">
+          #{form @Application.postComment(post.id)}
+          <p>
+            <label for="content">Replying to ${post.user.fullname}:</label>
+            <textarea name="content" id="content"></textarea>
+          </p>
+          <p>
+            <input type="submit" value="Reply" />
+          </p>
+          #{/form}
+        </div>
 
-			<div class="comment-content">
-				${comment.content.escape().nl2br()}</div>
-			#{/list}
-		</div>
-	</div>
+      </div>
+      <span >
+    </div>
 
-	#{/list}
+    <!-- Comments -->
+    <div class="comments">
+      #{list items:post.comments, as:'comment'}
+      <div class="comment-metadata">
+        <span class="comment-author">${comment.user.fullname}</span>
+        <span class="comment-date">${comment.createdAt}</span>
+      </div>
+
+      <div class="comment-content">
+        ${comment.content.escape().nl2br()}</div>
+      #{/list}
+    </div>
+  </div>
+
+  #{/list}
 
 </div>
