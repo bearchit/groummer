@@ -1,42 +1,48 @@
 <div>
-	<div style="font-size:15px; margin-bottom:15px;">
-		${current_user.nickname}님 환영합니다&nbsp;&nbsp;&nbsp;<a href="/logout" class="btn btn-primary">로그아웃</a>
-	</div>
-	<div style="display:inline-block;">
-		<div style="float:left;">
+	<table width="100%" style="margin-bottom:10px;">
+	<tr>
+		<td width="65%" style="border:1px solid #c5c5c5;">${current_user.nickname}님 환영합니다</td>
+		<td style="border:1px solid #c5c5c5;"><a href="/logout" class="btn btn-primary">로그아웃</a></td>
+	</tr>
+	<tr>
+		<td rowspan="2" style="border:1px solid #c5c5c5;">
 			<img src="@{Users.userPhoto(current_user.id)}" style="width:100px;" />
 			<br />(프로필 이미지)
-		</div>
-		<div style="float:right;margin-left: 10px;">
+			
+		</td>
+		<td style="border:1px solid #c5c5c5; border-bottom:none;"><a href="#" class="btn" style="margin-right:5px;" onclick="javascript:document.getElementById('user_profileImage').click(); return false;">이미지</a></td>
+	</tr>
+	<tr>
+		<td style="border:1px solid #c5c5c5; border-top:none; vertical-align:top;">
 			#{form @Users.profileImage_upload(), enctype:'multipart/form-data'}
-				<a href="#" class="btn" onclick="javascript:document.getElementById('user_profileImage').click(); return false;">이미지 변경</a>
-				<input id="user_profileImage" name="profileImage" style="visibility:hidden; width:1px;" type="file">
-				<br />
-			   <input type="submit" name="submit" class="btn" style="width:90px;" value="등록" />
+			<input type="submit" name="submit" class="btn" style="width:60px;" value="등록" />
+			<input id="user_profileImage" name="profileImage" style="visibility:hidden; width:1px;" type="file">
 			#{/form}
-		</div>
-	</div>
-	<div>
-		<p style="font-size:15px; text-align: left;">
-			<span>
-				#{if current_user.status }
-					감정 :
-					${current_user.status.status}
-					<a href="users/delete_status" class="btn">변경</a>
-				#{/if}
-				#{else}
-					<form action="/users/status_select" method="post" style="margin-bottom:0;">
-						감정선택 :
-						<select name='status_id' id="status_id" style="width:60px; margin-bottom:0; margin-right:20px;">
-						<option></option>
-						#{list items:all_status, as:'status'}
-						   <option value='${status.id}'>${status.status}</option>
-						#{/list}   
-						</select>
-						<input type="submit" class="btn" id="signin" value="변경" />
-					</form>
-				#{/else}
-			</span>
-		</p>
-	</div>	
+		</td>
+	</tr>
+	<tr>
+	#{if current_user.status }
+		<td style="border:1px solid #c5c5c5;">감정 : ${current_user.status.status}</td>
+		<td style="border:1px solid #c5c5c5;"><a href="users/delete_status" class="btn">변경</a></td>
+	#{/if}
+	#{else}
+		<td style="border:1px solid #c5c5c5;">
+			<form action="/users/status_select" method="post" style="margin-bottom:0;">
+				감정선택 :
+				<select name='status_id' id="status_id" style="width:80px; margin-bottom:0;">
+				<option></option>
+				#{list items:all_status, as:'status'}
+				   <option value='${status.id}'>${status.status}</option>
+				#{/list}   
+				</select>
+				
+			
+		</td>
+		<td style="border:1px solid #c5c5c5;">
+			<input type="submit" class="btn" id="signin" value="변경" />
+			</form>
+		</td>
+	#{/else}
+	</tr>
+	</table>
 </div>

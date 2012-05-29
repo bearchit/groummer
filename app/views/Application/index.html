@@ -29,92 +29,104 @@
 </script>
 
 #{extends 'main.html' /}
-<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
-	<div class="span7">
-		#{list items:users, as:'user'}
-		<div style="display:inline-block; text-align:center; margin-right:10px;">
-			<img src="@{Users.userPhoto(user.id)}" style="width:80px;" />
-			<br />
-			${user.nickname}
-			#{if user.status}
-			<br />
-				( <span id="status_user_${user.id}">${user.status.status}</span> )
-			#{/if}
+
+<div class="row">
+	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
+		<div class="span7">
+			#{list items:users, as:'user'}
+			<div style="display:inline-block; text-align:center; margin:5px; padding:5px 7px 5px 7px; border:1px solid #c5c5c5;">
+				<img src="@{Users.userPhoto(user.id)}" style="width:50px;height:50px;" />
+				<br />
+				${user.nickname}
+				#{if user.status}
+				<br />
+					( <span id="status_user_${user.id}">${user.status.status}</span> )
+				#{/if}
+			</div>
+			#{/list}
+			
 		</div>
-		#{/list}
-	</div>
-	<div class="span4" id="sign_form" style="text-align:center; padding-left:10px; border-left: 1px solid #c5c5c5;">
-		#{if current_user == null}
-		 	#{include 'Secure/login.html' /}
-		 #{/if}
-		 #{else}
-		 	#{include 'Secure/logon.html' /}
-		 #{/else}
+		<div class="span4" id="sign_form" style="text-align:center; padding-left:10px; border-left: 1px solid #c5c5c5;">
+			#{if current_user == null}
+			 	#{include 'Secure/login.html' /}
+			 #{/if}
+			 #{else}
+			 	#{include 'Secure/logon.html' /}
+			 #{/else}
+		</div>
 	</div>
 </div>
-<h2>Timeline</h2>
-
-<div id="timeline">
-
-  <div id="post">
-    #{form @Application.post()}
-    <p>
-      <label for="content">Your post: </label>
-      <textarea name="content" id="content"></textarea>
-    </p>
-    <p>
-      <input type="submit" value="Post" />
-    </p>
-    #{/form}
-  </div>
-
-  <div id="post">
-    #{list items:posts, as:'post'}
-
-    <!-- Metadata -->
-    <div class="post-metadata">
-      <div>
-        <span class="post-author">${post.user.fullname}</span>
-        <span class="post-date">${post.createdAt}</span>
-      </div>
-    </div>
-
-    <!-- Contents -->
-    <div>
-      <span class="post-content">${post.content}</span>
-      <div class="post-actions">
-        <span class="reply"><a href="#" onclick="$('#post-reply_${post.id}').show();">Reply</a></span>
-
-        <div id="post-reply_${post.id}" style="display:none;">
-          #{form @Application.postComment(post.id)}
-          <p>
-            <label for="content">Replying to ${post.user.fullname}:</label>
-            <textarea name="content" id="content"></textarea>
-          </p>
-          <p>
-            <input type="submit" value="Reply" />
-          </p>
-          #{/form}
-        </div>
-
-      </div>
-      <span >
-    </div>
-
-    <!-- Comments -->
-    <div class="comments">
-      #{list items:post.comments, as:'comment'}
-      <div class="comment-metadata">
-        <span class="comment-author">${comment.user.fullname}</span>
-        <span class="comment-date">${comment.createdAt}</span>
-      </div>
-
-      <div class="comment-content">
-        ${comment.content.escape().nl2br()}</div>
-      #{/list}
-    </div>
-  </div>
-
-  #{/list}
-
+<div class="row">
+	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
+		<div class="span12">
+			<h2>Timeline</h2>
+			<div id="timeline">
+			
+			  <div id="post" style="width:100%">
+			    #{form @Application.post()}
+			    <p>
+			      <label for="content">Your post: </label>
+			      <textarea name="content" id="content"></textarea>
+			    </p>
+			    <p>
+			      <input type="submit" value="Post" />
+			    </p>
+			    #{/form}
+			  </div>
+			
+			  <div id="post">
+			    #{list items:posts, as:'post'}
+			
+			    <!-- Metadata -->
+			    <div class="post-metadata">
+			      <div>
+			        <span class="post-author">${post.user.fullname}</span>
+			        <span class="post-date">${post.createdAt}</span>
+			      </div>
+			    </div>
+			
+			    <!-- Contents -->
+			    <div>
+			      <span class="post-content">${post.content}</span>
+			      <div class="post-actions">
+			        <span class="reply"><a href="#" onclick="$('#post-reply_${post.id}').show();">Reply</a></span>
+			
+			        <div id="post-reply_${post.id}" style="display:none;">
+			          #{form @Application.postComment(post.id)}
+			          <p>
+			            <label for="content">Replying to ${post.user.fullname}:</label>
+			            <textarea name="content" id="content"></textarea>
+			          </p>
+			          <p>
+			            <input type="submit" value="Reply" />
+			          </p>
+			          #{/form}
+			        </div>
+			
+			      </div>
+			      <span >
+			    </div>
+			
+			    <!-- Comments -->
+			    <div class="comments">
+			      #{list items:post.comments, as:'comment'}
+			      <div class="comment-metadata">
+			        <span class="comment-author">${comment.user.fullname}</span>
+			        <span class="comment-date">${comment.createdAt}</span>
+			      </div>
+			
+			      <div class="comment-content">
+			        ${comment.content.escape().nl2br()}</div>
+			      #{/list}
+			    </div>
+			  </div>
+			
+			  #{/list}
+			
+			</div>
+						
+		
+		
+		</div>
+	</div>
 </div>
