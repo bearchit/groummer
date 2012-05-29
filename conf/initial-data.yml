@@ -1,14 +1,28 @@
 # Test data
 
+Status(happy):
+  status : 행복
+  
+Status(sad):
+  status : 슬픔 
+
+Status(tired):
+  status : 피곤함
+  
+Status(glad):
+  status : 기쁘다
+
 User(bearchit):
-  nickname:        bearchit
-  password:     secret
+  nickname:     bearchit
+  password:     l0tx6y15+43m7toOxneDrA==
   fullname:     Mingoo Kim
+  status:       tired
 
 User(jspark):
-  nickname:        js_park
-  password:     manu
+  nickname:     js_park
+  password:     l0tx6y15+43m7toOxneDrA==
   fullname:     Jisung Park
+  status:       glad
     
 Post(firstBearchitPost):
   user:         bearchit
@@ -26,16 +40,6 @@ Comment(c1):
   createdAt:    2012-05-26
   post:         firstBearchitPost
   
-Status(happy):
-  status : 행복
-  
-Status(sad):
-  status : 슬픔  
 
-Status(tired):
-  status : 피곤함
-  
-Status(glad):
-  status : 기쁘다  
   
   

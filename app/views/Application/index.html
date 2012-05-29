@@ -56,48 +56,65 @@
 
 <div id="timeline">
 
-	<div id="post">
-		#{form @Application.post()}
-		<p>
-			<label for="content">Your post: </label>
-			<textarea name="content" id="content"></textarea>
-		</p>
-		<p>
-			<input type="submit" value="Post" />
-		</p>
-		#{/form}
-	</div>
+  <div id="post">
+    #{form @Application.post()}
+    <p>
+      <label for="content">Your post: </label>
+      <textarea name="content" id="content"></textarea>
+    </p>
+    <p>
+      <input type="submit" value="Post" />
+    </p>
+    #{/form}
+  </div>
 
-	<div id="post">
-		#{list items:posts, as:'post'}
+  <div id="post">
+    #{list items:posts, as:'post'}
 
-		<!-- Metadata -->
-		<div class="post-metadata">
-			<div>
-				<span class="post-author">${post.user.fullname}</span> <span
-					class="post-date">${post.createdAt}</span>
-			</div>
-		</div>
+    <!-- Metadata -->
+    <div class="post-metadata">
+      <div>
+        <span class="post-author">${post.user.fullname}</span>
+        <span class="post-date">${post.createdAt}</span>
+      </div>
+    </div>
 
-		<!-- Contents -->
-		<div>
-			<span class="post-content">${post.content}</span>
-		</div>
+    <!-- Contents -->
+    <div>
+      <span class="post-content">${post.content}</span>
+      <div class="post-actions">
+        <span class="reply"><a href="#" onclick="$('#post-reply_${post.id}').show();">Reply</a></span>
 
-		<!-- Comments -->
-		<div class="comments">
-			#{list items:post.comments, as:'comment'}
-			<div class="comment-metadata">
-				<span class="comment-author">${comment.user.fullname}</span> <span
-					class="comment-date">${comment.createdAt}</span>
-			</div>
+        <div id="post-reply_${post.id}" style="display:none;">
+          #{form @Application.postComment(post.id)}
+          <p>
+            <label for="content">Replying to ${post.user.fullname}:</label>
+            <textarea name="content" id="content"></textarea>
+          </p>
+          <p>
+            <input type="submit" value="Reply" />
+          </p>
+          #{/form}
+        </div>
 
-			<div class="comment-content">
-				${comment.content.escape().nl2br()}</div>
-			#{/list}
-		</div>
-	</div>
+      </div>
+      <span >
+    </div>
 
-	#{/list}
+    <!-- Comments -->
+    <div class="comments">
+      #{list items:post.comments, as:'comment'}
+      <div class="comment-metadata">
+        <span class="comment-author">${comment.user.fullname}</span>
+        <span class="comment-date">${comment.createdAt}</span>
+      </div>
+
+      <div class="comment-content">
+        ${comment.content.escape().nl2br()}</div>
+      #{/list}
+    </div>
+  </div>
+
+  #{/list}
 
 </div>

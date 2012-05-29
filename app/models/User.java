@@ -20,9 +20,9 @@ public class User extends Model {
   public Blob profileImage;
   public Date createdAt;
   public Date updatedAt;
-  
+
   @ManyToOne
-	public Status status;
+  public Status status;
 
   public User(String nickname, String fullname, String pwd, Date current_time) {
     this.nickname = nickname;
@@ -32,7 +32,7 @@ public class User extends Model {
   }
 
   public static User connect(String nickname, String pwd) {
-	String password = Crypto.passwordHash(pwd);
+    String password = Crypto.passwordHash(pwd);
     return find("byNicknameAndPassword", nickname, password).first();
   }
 }
