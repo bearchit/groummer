@@ -68,6 +68,11 @@
 	.visible-desktop {
 		display: none !important;
 	}
+	#sign_form{
+		padding:0;
+		border-left:none;
+		border-top:1px solid #c5c5c5;
+	}
 }
 
 @media ( min-width : 768px) and (max-width: 979px) {

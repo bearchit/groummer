@@ -1,4 +1,4 @@
-<div style="text-align:center;">
+<div style="text-align:center; margin-top:-35px;">
 	<table width="100%" style="margin-bottom:10px;">
 	<tr>
 		<td width="65%" style="border:1px solid #c5c5c5;">${current_user.nickname}님 환영합니다</td>
@@ -6,19 +6,19 @@
 	</tr>
 	<tr>
 		<td rowspan="2" style="border:1px solid #c5c5c5;">
-			<img src="@{Users.userPhoto(current_user.id)}" style="width:100px;" />
+			<img src="@{Users.userPhoto(current_user.id)}" style="width:100px; height:100px;" />
 			<br />(프로필 이미지)
 			
 		</td>
-		<td style="border:1px solid #c5c5c5; border-bottom:none;"><a href="#" class="btn" style="margin-right:5px;" onclick="javascript:document.getElementById('user_profileImage').click(); return false;">이미지</a></td>
+		<td style="border:1px solid #c5c5c5; height:50px; border-bottom:none;"><a href="#" class="btn" onclick="javascript:document.getElementById('user_profileImage').click(); return false;">이미지</a></td>
 	</tr>
 	<tr>
-		<td style="border:1px solid #c5c5c5; border-top:none; vertical-align:top;">
-			#{form @Users.profileImage_upload(), enctype:'multipart/form-data'}
+		#{form @Users.profileImage_upload(), enctype:'multipart/form-data'}
+		<input id="user_profileImage" name="profileImage" style="visibility:hidden; width:1px;" type="file">
+		<td style="border:1px solid #c5c5c5; border-top:none; vertical-align:center;">
 			<input type="submit" name="submit" class="btn" style="width:60px;" value="등록" />
-			<input id="user_profileImage" name="profileImage" style="visibility:hidden; width:1px;" type="file">
-			#{/form}
 		</td>
+		#{/form}
 	</tr>
 	<tr>
 	#{if current_user.status }

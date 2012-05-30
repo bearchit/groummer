@@ -55,7 +55,7 @@
 			
 		</div>
 		<div class="span4" style="text-align:center;">
-			<div id="sign_form" style=" border-left: 1px solid #c5c5c5; padding:0 0 10px 10px; text-align:right;">
+			<div id="sign_form" style="border-left: 1px solid #c5c5c5; padding:0 0 10px 10px; text-align:right;">
 				#{if current_user == null}
 				 	#{include 'Secure/login.html' /}
 				 #{/if}
@@ -66,6 +66,8 @@
 		</div>
 	</div>
 </div>
+
+
 <div class="row">
 	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5; padding-top:20px;">
 		<div class="span12">
@@ -121,16 +123,16 @@
 					<tbody style="border-bottom:1px solid #c5c5c5;">
 					<tr>
 						<td style="width:10%; padding:10px 0 10px 0; vertical-align:center;">
-							<img src="@{Users.userPhoto(user.id)}" style="width:50px;height:50px;" />
+							<img src="@{Users.userPhoto(post.user.id)}" style="width:50px;height:50px;" />
 							<br />
-							<span class="custom-blue" style="font-weight:bold;">${user.nickname}</span>
-							#{if user.status}
+							<span class="custom-blue" style="font-weight:bold;">${post.user.nickname}</span>
+							#{if post.user.status}
 							<br />
-								( <span id="status_user_${user.id}">${user.status.status}</span> )
+								( <span id="status_user_${post.user.id}">${post.user.status.status}</span> )
 							#{/if}
 							#{else}
 							<br />
-								( <span id="status_user_${user.id}">노감정</span> )	
+								( <span id="status_user_${post.user.id}">노감정</span> )	
 							#{/else}
 						</td>
 						<td style="width:80%; text-align:left; padding-bottom:20px;  padding-left:30px; vertical-align:center;">
