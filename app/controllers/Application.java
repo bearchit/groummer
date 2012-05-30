@@ -27,7 +27,8 @@ public class Application extends Controller {
 
   public static void index() {
     List<Post> posts = Post.find("order by createdAt desc").fetch();
-    List<User> users = User.find("order by createdAt desc").fetch();
+    // List<User> users = User.find("order by createdAt desc").fetch();
+    List<User> users = User.realUsers();
     render(posts, users);
   }
 
