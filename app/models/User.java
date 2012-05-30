@@ -9,6 +9,7 @@ import play.db.jpa.*;
 import play.libs.Crypto;
 
 @Entity
+@Table(name="my_user")
 public class User extends Model {
   public String nickname;
   public String password;
