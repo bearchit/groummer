@@ -1,4 +1,9 @@
 <script>
+
+	function hideAllReplyForms() {
+	  $('.reply-form').hide();
+	}
+	
 	function sign_up(){
 		var nickname = $('#sign_up_nickname').val();
 		var fullname = $('#sign_up_fullname').val();
@@ -148,7 +153,7 @@
 			    <div>
 			      <span class="post-content">${post.content}</span>
 			      <div class="post-actions">
-			        <span class="reply"><a href="#" onclick="$('#post-reply_${post.id}').show();">Reply</a></span>
+			      <span class="reply"><a href="#" onclick="hideAllReplyForms(); $('#post-reply_${post.id}').show();">Reply</a></span>
 			
 			        <div id="post-reply_${post.id}" style="display:none;">
 			          #{form @Application.postComment(post.id)}
@@ -188,4 +193,5 @@
 		
 		</div>
 	</div>
+
 </div>
