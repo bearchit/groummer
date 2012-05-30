@@ -129,7 +129,9 @@
 			  <div id="post" style="width:100%; border-bottom: 1px solid #c5c5c5;">
 			    #{form @Application.post()}
 			    <p>
-			      <label for="content">Your post: </label>
+                              <input type="checkbox" name="anonymous" id="anonymous">익명</input>
+                            </p>
+                            <p>
 			      <textarea name="content" id="content"></textarea>
 			    </p>
 			    <p>
@@ -153,7 +155,7 @@
 			    <div>
 			      <span class="post-content">${post.content}</span>
 			      <div class="post-actions">
-			      <span class="reply"><a href="#" onclick="hideAllReplyForms(); $('#post-reply_${post.id}').show();">Reply</a></span>
+			      <span class="reply"><a href="#" onclick="hideAllReplyForms(); $('#post-reply_${post.id}').toggle();">Reply</a></span>
 			
 			        <div id="post-reply_${post.id}" style="display:none;">
 			          #{form @Application.postComment(post.id)}
