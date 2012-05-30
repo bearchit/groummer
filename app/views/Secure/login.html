@@ -1,12 +1,13 @@
 
-#{if success}
-	<p class="success">
-		${success}
-	</p>
-#{/if}
-<h2 style="text-align: left;">로그인</h2>
 
-<div id="login">
+
+<div id="login" style="padding-right:60px;">
+	#{if success}
+		<p class="success">
+			${success}
+		</p>
+	#{/if}
+	<h2 style="text-align: left;">로그인</h2>
 	#{form @Secure.authenticate()}
 		
 		#{if flash.error}

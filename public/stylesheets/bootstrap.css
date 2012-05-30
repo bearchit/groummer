@@ -130,6 +130,8 @@ textarea {
 }
 
 body {
+	padding-top: 60px;
+    padding-bottom: 40px;
 	margin: 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 13px;
@@ -390,7 +392,7 @@ a:hover {
 }
 
 p {
-	margin: 0 0 9px;
+	margin: 0 0 0px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 13px;
 	line-height: 18px;

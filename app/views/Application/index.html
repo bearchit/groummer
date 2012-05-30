@@ -22,17 +22,16 @@
 	}
 	
 	function sign_up_form(){
-		var form = '<h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" style="width:180px;" id="sign_up_nickname" /></p><p>실제이름 <input type="text" style="width:180px;" id="sign_up_fullname" /></p><p>비밀번호 <input type="password" style="width:180px;" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="password" style="width:180px;" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="/" class="btn" style="margin-right:30px;">로그인</a><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div>';
+		var form = '<div style="padding-right:60px;"><h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" style="width:180px;" id="sign_up_nickname" /></p><p>실제이름 <input type="text" style="width:180px;" id="sign_up_fullname" /></p><p>비밀번호 <input type="password" style="width:180px;" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="password" style="width:180px;" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="/" class="btn" style="margin-right:30px;">로그인</a><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div></div>';
 		$('#sign_form').html(form);
 	}
 	
 </script>
 
 #{extends 'main.html' /}
-
 <div class="row">
 	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
-		<div class="span7">
+		<div class="span8">
 			#{list items:users, as:'user'}
 			<div style="display:inline-block; text-align:center; margin:5px; padding:5px 7px 5px 7px; border:1px solid #c5c5c5;">
 				<img src="@{Users.userPhoto(user.id)}" style="width:50px;height:50px;" />
@@ -42,27 +41,87 @@
 				<br />
 					( <span id="status_user_${user.id}">${user.status.status}</span> )
 				#{/if}
+				#{else}
+				<br />
+					( <span id="status_user_${user.id}">노감정</span> )	
+				#{/else}
 			</div>
 			#{/list}
 			
 		</div>
-		<div class="span4" id="sign_form" style="text-align:center; padding-left:10px; border-left: 1px solid #c5c5c5;">
-			#{if current_user == null}
-			 	#{include 'Secure/login.html' /}
-			 #{/if}
-			 #{else}
-			 	#{include 'Secure/logon.html' /}
-			 #{/else}
+		<div class="span4" style="text-align:center;">
+			<div id="sign_form" style=" border-left: 1px solid #c5c5c5; padding:0 0 10px 10px; text-align:right;">
+				#{if current_user == null}
+				 	#{include 'Secure/login.html' /}
+				 #{/if}
+				 #{else}
+				 	#{include 'Secure/logon.html' /}
+				 #{/else}
+			</div>
 		</div>
 	</div>
 </div>
 <div class="row">
+	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5; margin:20px 0 20px 0;">
+		<div class="span12">
+			<div id="post" style="margin-right:30px;">
+				#{if current_user}
+				<table width="100%" style="margin-bottom:10px; text-align:center;">
+					<tr>
+						<td style="width:10%; border:1px solid #c5c5c5;">
+							<img src="@{Users.userPhoto(current_user.id)}" style="width:50px;height:50px;" />
+							<br />
+							${current_user.nickname}
+							#{if current_user.status}
+							<br />
+								( <span id="status_user_${current_user.id}">${current_user.status.status}</span> )
+							#{/if}
+							#{else}
+							<br />
+								( <span id="status_user_${current_user.id}">노감정</span> )	
+							#{/else}
+						</td>
+						<td style="width:70%; border:1px solid #c5c5c5;">
+							#{form @Application.post()}
+						      <textarea name="content" id="content" style="width:90%; height:65px; margin-bottom:0;"></textarea>
+						</td>
+						<td style="width:10%; border:1px solid #c5c5c5;">
+							<input type="submit" class="btn btn-primary" style="width:80%; height:50px; " value="등록" />
+						    #{/form}
+						</td>
+					</tr>
+				</table>
+				#{/if}
+				#{else}
+				<table width="100%" style="margin-bottom:10px; text-align:center;">
+					<tr>
+						<td style="width:100%; height:50px; border:1px solid #c5c5c5;">
+							쓰기는 로그인 후에 가능합니다.
+						</td>
+					</tr>
+				</table>
+				
+				#{/else}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
+		<div class="span12">
+			sadf
+		</div>
+	</div>
+</div>
+
+
 	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
 		<div class="span12">
 			<h2>Timeline</h2>
 			<div id="timeline">
 			
-			  <div id="post" style="width:100%">
+			  <div id="post" style="width:100%; border-bottom: 1px solid #c5c5c5;">
 			    #{form @Application.post()}
 			    <p>
 			      <label for="content">Your post: </label>
@@ -73,10 +132,10 @@
 			    </p>
 			    #{/form}
 			  </div>
+			  
 			
 			  <div id="post">
 			    #{list items:posts, as:'post'}
-			
 			    <!-- Metadata -->
 			    <div class="post-metadata">
 			      <div>
