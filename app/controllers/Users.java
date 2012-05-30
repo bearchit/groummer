@@ -49,7 +49,13 @@ public class Users extends Controller {
 
                         // 감정 변화 포스팅
                         User groummer = User.groummer();
-                        new Post(groummer, user.fullname + "님의 기분이 " + status.status + " (으)로 바뀌었습니다").save();
+
+                        String userName = user.nickname;
+                        if(!user.fullname.isEmpty()) {
+                          userName += "(" + user.fullname + ")";
+                        }
+
+                        new Post(groummer, userName + "님의 기분이 " + status.status + "(으)로 바뀌었습니다").save();
                 }
                 Application.index();
         }

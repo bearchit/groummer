@@ -4759,3 +4759,7 @@ to {
 .invisible {
 	visibility: hidden;
 }
+
+.custom-blue{
+	color:#1384af;
+}
