@@ -35,4 +35,16 @@ public class User extends Model {
     String password = Crypto.passwordHash(pwd);
     return find("byNicknameAndPassword", nickname, password).first();
   }
+
+  public static User groummer() {
+    return find("byNickname", "groummer").first();
+  }
+
+  public static User anonymous() {
+    return find("byNickname", "anonymous").first();
+  }
+
+  public Boolean isSystemUser() {
+    return this.nickname == "groummer" || this.nickname == "anonymous";
+  }
 }

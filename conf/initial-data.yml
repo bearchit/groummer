@@ -12,6 +12,18 @@ Status(tired):
 Status(glad):
   status : 기쁘다
 
+User(system):
+  nickname:     groummer
+  password:     groummer
+  fullname:     Groummer
+  status:       happy
+
+User(anonymous):
+  nickname:     anonymous
+  password:     groummer
+  fullname:     Anonymous
+  status:       happy
+  
 User(bearchit):
   nickname:     bearchit
   password:     l0tx6y15+43m7toOxneDrA==
