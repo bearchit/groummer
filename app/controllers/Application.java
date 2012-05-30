@@ -31,16 +31,28 @@ public class Application extends Controller {
     render(posts, users);
   }
 
-  public static void post(String content) {
-    User user = User.find("byNickname", Security.connected()).first();
+  public static void post(String content, Boolean anonymous) {
+    User user;
+
+    if(anonymous == null || anonymous == false)
+      user = User.find("byNickname", Security.connected()).first();
+    else
+      user = User.anonymous();
+
     if(user != null) {
         new Post(user, content).save();
     }
     index();
   }
 
-  public static void postComment(Long postId, String content) {
-    User user = User.find("byNickname", Security.connected()).first();
+  public static void postComment(Long postId, String content, Boolean anonymous) {
+    User user;
+
+    if(anonymous == null || anonymous == false)
+      user = User.find("byNickname", Security.connected()).first();
+    else
+      user = User.anonymous();
+
     if(user != null) {
       Post post = Post.findById(postId);
       post.addComment(user, content);
