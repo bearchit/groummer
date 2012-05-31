@@ -1,0 +1,28 @@
+#{form @Secure.authenticate(), class:'well'}
+<table>
+  <tr>
+    <td>Nickname</td>
+  </tr>
+  <tr>
+    <td>
+      <input type="text" name="username" id="username" value="${flash.username}">
+    </td>
+  </tr>
+
+  <tr>
+    <td>Password</td>
+  </tr>
+
+  <tr>
+    <td>
+      <input type="password" name="password" id="password" value="">
+    </td>
+  </tr>
+
+  <tr>
+    <td style="text-align:center;">
+      <input type="submit" class="btn btn-primary" id="signin" value="Sign in" />
+    </td>
+  </tr>
+</table>
+#{/form}

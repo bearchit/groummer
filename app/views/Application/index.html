@@ -34,10 +34,10 @@
 
 #{extends 'main.html' /}
 <div class="row">
-	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5;">
-		<div class="span8">
+	<div style="display:inline-block">
+		<div class="span12 well">
 			#{list items:users, as:'user'}
-			<div style="display:inline-block; text-align:center; margin:5px; padding:5px 7px 5px 7px; border:1px solid #c5c5c5;">
+			<div style="display:inline-block; text-align:center; margin:5px; padding:5px 7px 5px 7px;">
 				<img src="@{Users.userPhoto(user.id)}" style="width:50px;height:50px;" />
 				<br />
 				<span class="custom-blue" style="font-weight:bold;">${user.nickname}</span>
@@ -53,16 +53,17 @@
 			#{/list}
 			
 		</div>
-		<div class="span4" style="text-align:center;">
-			<div id="sign_form" style="border-left: 1px solid #c5c5c5; padding:0 0 10px 10px; text-align:right;">
-				#{if current_user == null}
-				 	#{include 'Secure/login.html' /}
-				 #{/if}
-				 #{else}
-				 	#{include 'Secure/logon.html' /}
-				 #{/else}
-			</div>
-		</div>
+                
+		<!-- <div class="span4" style="text-align:center;"> -->
+		<!-- 	<div id="sign_form" style="border-left: 1px solid #c5c5c5; padding:0 0 10px 10px; text-align:right;"> -->
+		<!-- 		#{if current_user == null} -->
+		<!-- 		 	#{include 'Secure/login.html' /} -->
+		<!-- 		 #{/if} -->
+		<!-- 		 #{else} -->
+		<!-- 		 	#{include 'Secure/logon.html' /} -->
+		<!-- 		 #{/else} -->
+		<!-- 	</div> -->
+		<!-- </div> -->
 	</div>
 </div>
 
