@@ -6,74 +6,82 @@
 
 #{extends 'main.html' /}
 <div class="row">
-	<div style="display:inline-block">
-		<div class="span12 well">
-			#{list items:users, as:'user'}
-			<div style="display:inline-block; text-align:center; margin:5px; padding:5px 7px 5px 7px;">
-				<img src="@{Users.userPhoto(user.id)}" style="width:50px;height:50px;" />
-				<br />
-				<span class="custom-blue" style="font-weight:bold;">${user.nickname}</span>
-				#{if user.status}
-				<br />
-					( <span id="status_user_${user.id}">${user.status.status}</span> )
-				#{/if}
-				#{else}
-				<br />
-					( <span id="status_user_${user.id}">노감정</span> )	
-				#{/else}
-			</div>
-			#{/list}
-			
-		</div>
-	</div>
+  <div class="span12 well" style="background:#FFFFFF; border:1px solid #c5c5c5;">
+    #{list items:users, as:'user'}
+    <div style="display:inline-block; text-align:center; margin:5px; padding:5px 7px 5px 7px;">
+      <img src="@{Users.userPhoto(user.id)}" style="width:50px;height:50px;" />
+      <br />
+      <span class="custom-blue" style="font-weight:bold;">${user.nickname}</span>
+      <br />
+      <span id="status_user_${user.id}" class="badge badge-info">${user.status.status}</span>
+    </div>
+    #{/list}
+    
+  </div>
 </div>
 
 
+<!-- Post form -->
 <div class="row">
-	<div style="display:inline-block; border-bottom: 1px solid #c5c5c5; padding-top:20px;">
-		<div class="span12">
-			<div id="post">
-				#{if current_user}
-				<table width="100%" style="margin-bottom:10px; text-align:center;">
-					<tr>
-						<td style="width:10%;">
-							<img src="@{Users.userPhoto(current_user.id)}" style="width:50px;height:50px;" />
-							<br />
-							<span class="custom-blue" style="font-weight:bold;">${current_user.nickname}</span>
-							#{if current_user.status}
-							<br />
-								( <span id="status_user_${current_user.id}">${current_user.status.status}</span> )
-							#{/if}
-							#{else}
-							<br />
-								( <span id="status_user_${current_user.id}">노감정</span> )	
-							#{/else}
-						</td>
-						<td style="width:80%; text-align:left; padding-bottom:20px;  padding-left:30px; vertical-align:center;">
-							#{form @Application.post()}
-                                                        <input type="checkbox" id="anonymous" name="anonymous" />&nbsp;익명<br />
-						      <textarea name="content" id="content" style="width:90%; height:65px; margin-bottom:0;"></textarea>
-						</td>
-						<td style="width:10%;">
-							<input type="submit" class="btn btn-primary" style="width:80%; height:50px;" value="등록" />
-						    #{/form}
-						</td>
-					</tr>
-				</table>
-				#{/if}
-				#{else}
-				<table width="100%" style="margin-bottom:10px; text-align:center;">
-					<tr>
-						<td style="width:100%; height:50px;">
-							쓰기는 로그인 후에 가능합니다.
-						</td>
-					</tr>
-				</table>
+	<!-- <div style="display:inline-block; border-bottom: 1px solid #c5c5c5; padding-top:20px;"> -->
+	<!-- 	<div class="span12"> -->
+	<!-- 		<div id="post"> -->
+	<!-- 			#{if current_user} -->
+	<!-- 			<table width="100%" style="margin-bottom:10px; text-align:center;"> -->
+	<!-- 				<tr> -->
+	<!-- 					<\!-- <td style="width:10%;"> -\-> -->
+	<!-- 					<\!-- 	<img src="@{Users.userPhoto(current_user.id)}" style="width:50px;height:50px;" /> -\-> -->
+	<!-- 					<\!-- 	<br /> -\-> -->
+	<!-- 					<\!-- 	<span class="custom-blue" style="font-weight:bold;">${current_user.nickname}</span> -\-> -->
+	<!-- 					<\!-- 	<br /> -\-> -->
+	<!-- 					<\!-- 	<span id="status_user_${current_user.id}" class="badge badge-info">${current_user.status.status}</span> -\-> -->
+	<!-- 					<\!-- </td> -\-> -->
+	<!-- 					<td style="width:80%; text-align:left; padding-bottom:20px; vertical-align:center;"> -->
+	<!-- 						#{form @Application.post()} -->
+        <!--                                                 <input type="checkbox" id="anonymous" name="anonymous" />&nbsp;익명<br /> -->
+	<!-- 					      <textarea name="content" id="content" style="width:90%; height:65px; margin-bottom:0;"></textarea> -->
+	<!-- 					</td> -->
+	<!-- 					<td style="width:20%;"> -->
+	<!-- 						<input type="submit" class="btn btn-primary" style="width:80%; height:50px;" value="등록" /> -->
+	<!-- 					    #{/form} -->
+	<!-- 					</td> -->
+	<!-- 				</tr> -->
+	<!-- 			</table> -->
+	<!-- 			#{/if} -->
+	<!-- 			#{else} -->
+	<!-- 			<table width="100%" style="margin-bottom:10px; text-align:center;"> -->
+	<!-- 				<tr> -->
+	<!-- 					<td style="width:100%; height:50px;"> -->
+	<!-- 						쓰기는 로그인 후에 가능합니다. -->
+	<!-- 					</td> -->
+	<!-- 				</tr> -->
+	<!-- 			</table> -->
 				
-				#{/else}
-			</div>
-		</div>
-	</div>
+	<!-- 			#{/else} -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
+	<!-- </div> -->
+
+        <div class="span8 offset2">
+          #{form @Application.post()}
+          <table width="100%">
+            <tr>
+              <td>
+
+	        <textarea name="content" id="content" style="width:100%; height:65px;"></textarea>
+              </td>
+            <tr>
+              <td style="text-align:right;">
+                <input type="checkbox" id="anonymous" name="anonymous" />&nbsp;익명
+                &nbsp;
+                <input type="submit" class="btn btn-primary" value="게시" />
+              </td>                
+            </tr>
+          </table>
+          #{/form}
+        </div> 
+
+        
 </div>
 
 <div class="row">
@@ -88,17 +96,11 @@
 							<img src="@{Users.userPhoto(post.user.id)}" style="width:50px;height:50px;" />
 							<br />
 							<span class="custom-blue" style="font-weight:bold;">${post.user.nickname}</span>
-							#{if post.user.status}
-							<br />
-								( <span id="status_user_${post.user.id}">${post.user.status.status}</span> )
-							#{/if}
-							#{else}
-							<br />
-								( <span id="status_user_${post.user.id}">노감정</span> )	
-							#{/else}
+                                                        <br />
+							<!-- <span id="status_user_${post.user.id}" class="badge badge-info">${post.user.status.status}</span> -->
 						</td>
 						<td style="width:80%; text-align:left; padding-bottom:20px;  padding-left:30px; vertical-align:center;">
-							${post.content} <a href="/posts/add_post_likes?postId=${post.id}" class="btn">추천 ${post.post_likes.size()}</a> 
+						  ${post.content} <a href="/posts/add_post_likes?postId=${post.id}" class="btn btn-info"><i class="icon-thumbs-up icon-white"></i>&nbsp;추천 ${post.post_likes.size()}</a> 
 							<br />${post.createdAt}
 							<br />
 							#{if post.post_likes.size() != 0}
@@ -118,10 +120,15 @@
 							<td style="width:10%;"></td>
 							<td colspan="2" style=" width:80%; text-align:left;">
 								<div style="float:left;">
-									<img src="@{Users.userPhoto(comment.user.id)}" style="width:50px;height:50px;" />
+								  <img src="@{Users.userPhoto(comment.user.id)}" style="width:50px;height:50px;" />
+                                                                  <br />
+                                                                  <!-- <span id="status_user_${post.user.id}" class="badge badge-info">${post.user.status.status}</span> -->
 								</div>
 								<div style="float:left; margin-left:10px;">
-								<span class="custom-blue" style="font-weight:bold; font-size:15px;"> ${comment.user.nickname}</span><br />
+								<span class="custom-blue" style="font-weight:bold; font-size:15px;"> ${comment.user.nickname}</span>
+                                                                <br />
+
+                                                                
 								${comment.content.escape().nl2br()}
 								<a href="/comments/add_comment_likes?commentId=${comment.id}" class="btn">추천 ${comment.comment_likes.size()}</a>
 								<br />${comment.createdAt}
@@ -145,7 +152,7 @@
 						  <textarea name="content" id="content" style="width:90%; height:35px; margin-bottom:0;"></textarea>
 						</td>
 						<td style="width:10%;">
-							<input type="submit" class="btn btn-primary" style="width:80%; height:35px;" value="등록" />
+						  <input type="submit" class="btn btn-primary" style="width:80%; height:35px;" value="등록" />
 						</td>
 				          #{/form}
 					<tr>
