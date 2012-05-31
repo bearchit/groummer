@@ -17,6 +17,10 @@ POST		/users/profileimage_upload		Users.profileimage_upload
 
 GET		/users/delete_status					Users.delete_status
 
+GET    /posts/add_post_likes                Application.PostLike
+
+GET    /comments/add_comment_likes                Application.CommentLike
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

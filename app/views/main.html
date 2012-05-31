@@ -21,7 +21,11 @@
 
 </head>
 <body>
-
+	<div id="flash" class="flash_html" style="display:none;" >
+      #{if flash.message}
+      	${flash.message}
+      #{/if}
+    </div>
 	<div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -38,6 +42,29 @@
    		#{doLayout /}
     </div>
 
-    
+    <script type="text/javascript">
+	    function notify(flash_message){
+			// jQuery: reference div, load in message, and fade in
+		    var flash_div = $("#flash");
+		    flash_div.html(flash_message);
+		    flash_div.attr('class', 'flash_ajax');
+		    flash_div.fadeIn("fast");
+		      
+		    // use Javascript timeout function to delay calling
+		    // our jQuery fadeOut, and hide
+		    setTimeout(function(){
+		    	flash_div.fadeOut("fast", function(){
+		        	flash_div.html("");
+		        	flash_div.attr('class', 'flash_html');
+		        	flash_div.hide();
+		      	})
+		    }, 2000);
+		}
+		var flash_message = $.trim($("#flash").html());
+		// call our flash display function
+		if (flash_message != "") {
+		    notify(flash_message);
+		}
+    </script>
 </body>
 </html>

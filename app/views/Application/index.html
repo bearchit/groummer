@@ -136,7 +136,7 @@
 							#{/else}
 						</td>
 						<td style="width:80%; text-align:left; padding-bottom:20px;  padding-left:30px; vertical-align:center;">
-							${post.content} 
+							${post.content} <a href="/posts/add_post_likes?postId=${post.id}" class="btn">추천 ${post.post_likes.size()}</a> 
 							<br />${post.createdAt}
 						</td>
 						<td style="width:10%; vertical-align:center; padding-bottom:20px; ">
@@ -154,6 +154,7 @@
 								<div style="float:left; margin-left:10px;">
 								<span class="custom-blue" style="font-weight:bold; font-size:15px;"> ${comment.user.nickname}</span><br />
 								${comment.content.escape().nl2br()}
+								<a href="/comments/add_comment_likes?commentId=${comment.id}" class="btn">추천 ${comment.comment_likes.size()}</a>
 								</div>
 							</td>
 						</tr>

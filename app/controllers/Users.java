@@ -28,11 +28,11 @@ public class Users extends Controller {
                 if(user == null && !nickname.isEmpty() ){
                         Date current_time = new java.util.Date();
                         new User(nickname, fullname, pwd, current_time).save();
-                        success = "회원가입이 완료되었습니다. 로그인 해주세요.";
+                        flash("message", "회원가입이 완료되었습니다. 로그인 해주세요");
                 } else if(nickname.isEmpty()){
-                        success = "닉네임을 적어주세요";
+                	flash("message", "닉네임을 적어주세요");    
                 }else{
-                        success = "닉네임이 존재";
+                	flash("message", "이미 닉네임이 존재합니다");
                 }
                 renderTemplate("Secure/login.html", success);
         }

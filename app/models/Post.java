@@ -3,6 +3,7 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import play.Logger;
 import play.db.jpa.*;
 
 @Entity
@@ -16,6 +17,9 @@ public class Post extends Model {
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
   public List<Comment> comments;
+  
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+  public List<PostLike> post_likes;
 
   public Date createdAt;
 
@@ -32,4 +36,9 @@ public class Post extends Model {
     this.save();
     return this;
   }
+  public Post addPostLike(User user){
+	  new PostLike(user, this).save();
+	  return this;
+  }
+  
 }
