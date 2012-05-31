@@ -17,6 +17,8 @@
 
     <script src="@{'/public/javascripts/jquery-1.7.2.min.js'}"
             type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/kakaoLink.js'}"
+            type="text/javascript" charset="${_response_encoding}"></script>
     #{get 'moreScripts' /}
 
     <script language="javascript">
@@ -34,7 +36,6 @@
 		        link.execute();
 	       });
 	});
-  
     </script>
 
   </head>
