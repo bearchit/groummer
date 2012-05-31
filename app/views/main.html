@@ -23,6 +23,18 @@
   $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
   });
+  $(function() {
+	var msg = "그룹을 위한 커뮤니티, 그루머";
+	var url = "http://218.38.12.163:9000/";
+	var appid = "http://218.38.12.163:9000/";
+	var appver = "2.0";
+	var appname = "Groummer";
+	var link = new com.kakao.talk.KakaoLink(msg, url, appid, appver, appname);
+	       $("#kakao").click(function() {// button click event
+		        link.execute();
+	       });
+	});
+  
     </script>
 
   </head>
@@ -38,7 +50,8 @@
       <div class="navbar-inner">
         <div class="container">
 
-          <a class="brand" href="/">${appName}</a>
+          <a class="brand" style="margin-top:5px;" href="/">${appName}</a>
+		  <a href="#" onclick="return false;" id="kakao"><img src="public/images/kakao.jpg" style="height:50px;" /></a>
 
           <!-- User info -->
           <ul class="nav pull-right">
