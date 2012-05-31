@@ -22,20 +22,25 @@ public class Users extends Controller {
                 }
         }
 
-        public static void sign_up(String nickname, String fullname, String pwd ) {
-                User user = User.find("byNickname", nickname).first();
-                String success = "";
-                if(user == null && !nickname.isEmpty() ){
-                        Date current_time = new java.util.Date();
-                        new User(nickname, fullname, pwd, current_time).save();
-                        flash("message", "회원가입이 완료되었습니다. 로그인 해주세요");
-                } else if(nickname.isEmpty()){
-                	flash("message", "닉네임을 적어주세요");    
-                }else{
-                	flash("message", "이미 닉네임이 존재합니다");
-                }
-                renderTemplate("Secure/login.html", success);
+    public static void sign_up(String nickname, String fullname, String pwd, String pwd_confirm ) {
+        User user = User.find("byNickname", nickname).first();
+
+        if(!pwd.equals(pwd_confirm)) {
+            flash("message", "비밀번호가 서로 다릅니다");
+        } else {
+            if(user == null && !nickname.isEmpty() ){
+                Date current_time = new java.util.Date();
+                new User(nickname, fullname, pwd, current_time).save();
+                flash("message", "회원가입이 완료되었습니다. 로그인 해주세요");
+            } else if(nickname.isEmpty()){
+                flash("message", "닉네임을 적어주세요");
+            } else{
+                flash("message", "이미 닉네임이 존재합니다");
+            }
         }
+
+        Application.index();
+    }
 
         public static void status_select(Long status_id){
                 User user = User.find("byNickname", Security.connected()).first();

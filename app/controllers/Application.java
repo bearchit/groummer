@@ -44,7 +44,7 @@ public class Application extends Controller {
         new Post(user, content).save();
         flash("message", "등록 완료");
     }else{
-    	flash("message", "글쓰기는 로그인 후에 가능합니다");
+        flash("message", "글쓰기는 로그인 후에 가능합니다");
     }
     index();
   }
@@ -62,41 +62,41 @@ public class Application extends Controller {
       post.addComment(user, content);
       flash("message", "등록 완료");
     }else{
-    	flash("message", "덧글은 로그인 후 가능합니다");
+        flash("message", "덧글은 로그인 후 가능합니다");
     }
     index();
   }
-  
+
   public static void PostLike(Long postId) {
-	User user = User.find("byNickname", Security.connected()).first();
-	Post post = Post.findById(postId);
-	PostLike post_like = PostLike.find("byUserAndPost",user, post).first();
-	if(user != null && post_like == null && post.user != user){ //내가 추천한적 없고 글도 내가 안쓴 정상 flow
-		post.addPostLike(user);
-	}else if(post.user == user){//본인 글
-		flash("message", "본인 글에는 추천할 수 없습니다"); 
-  	}else if(post_like != null){ //추천한적 있는 경우
-  		flash("message", "추천은 한번만 가능합니다");
-  	}else{
-  		flash("message", "추천은 로그인 후 가능합니다");
-  	}
+        User user = User.find("byNickname", Security.connected()).first();
+        Post post = Post.findById(postId);
+        PostLike post_like = PostLike.find("byUserAndPost",user, post).first();
+        if(user != null && post_like == null && post.user != user){ //내가 추천한적 없고 글도 내가 안쓴 정상 flow
+                post.addPostLike(user);
+        }else if(post.user == user){//본인 글
+                flash("message", "본인 글에는 추천할 수 없습니다");
+        }else if(post_like != null){ //추천한적 있는 경우
+                flash("message", "추천은 한번만 가능합니다");
+        }else{
+                flash("message", "추천은 로그인 후 가능합니다");
+        }
     index();
   }
-  
+
   public static void CommentLike(Long commentId) {
-	User user = User.find("byNickname", Security.connected()).first();
-	Comment comment = Comment.findById(commentId);
-	CommentLike comment_like = CommentLike.find("byUserAndComment",user, comment).first();
-	if(user != null && comment_like == null && comment.user != user){ //내가 추천한적 없고 글도 내가 안쓴 정상 flow
-		comment.addCommentLike(user);
-	}else if(comment.user == user){//본인 글
-		flash("message", "본인 글에는 추천할 수 없습니다"); 
-  	}else if(comment_like != null){ //추천한적 있는 경우
-  		flash("message", "추천은 한번만 가능합니다");
-  	}else{
-  		flash("message", "추천은 로그인 후 가능합니다");
-  	}
-	
+        User user = User.find("byNickname", Security.connected()).first();
+        Comment comment = Comment.findById(commentId);
+        CommentLike comment_like = CommentLike.find("byUserAndComment",user, comment).first();
+        if(user != null && comment_like == null && comment.user != user){ //내가 추천한적 없고 글도 내가 안쓴 정상 flow
+                comment.addCommentLike(user);
+        }else if(comment.user == user){//본인 글
+                flash("message", "본인 글에는 추천할 수 없습니다");
+        }else if(comment_like != null){ //추천한적 있는 경우
+                flash("message", "추천은 한번만 가능합니다");
+        }else{
+                flash("message", "추천은 로그인 후 가능합니다");
+        }
+
     index();
   }
 

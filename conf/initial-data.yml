@@ -1,5 +1,8 @@
 # Test data
 
+Status(none):
+  status: 노감정
+
 Status(happy):
   status : 행복
   
@@ -10,7 +13,7 @@ Status(tired):
   status : 피곤함
   
 Status(glad):
-  status : 기쁘다
+  status : 기쁨
 
 User(system):
   nickname:     groummer

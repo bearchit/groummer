@@ -29,6 +29,7 @@ public class User extends Model {
         this.nickname = nickname;
         this.password = Crypto.passwordHash(pwd);
         this.fullname = fullname;
+        this.status = (Status)Status.find("byStatus", "노감정").first();
         this.createdAt = current_time;
     }
 

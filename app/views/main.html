@@ -19,9 +19,9 @@
     #{get 'moreScripts' /}
 
     <script language="javascript">
-      $(document).ready(function() {
-      $('.dropdown-toggle').dropdown();
-      });
+  $(document).ready(function() {
+    $('.dropdown-toggle').dropdown();
+  });
     </script>
 
   </head>
@@ -31,17 +31,17 @@
       ${flash.message}
       #{/if}
     </div>
-    
+
     <!-- Navigation -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
 
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
+          <!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> -->
+          <!--   <span class="icon-bar"></span> -->
+          <!--   <span class="icon-bar"></span> -->
+          <!--   <span class="icon-bar"></span> -->
+          <!-- </a> -->
 
           <a class="brand" href="/">${appName}</a>
           <ul class="nav pull-right">
@@ -57,23 +57,44 @@
               <ul class="dropdown-menu">
                 <table  style="width:100%;">
                   <tr >
-                    <td colspan="2" style="text-align:center">
-                      <div id="profile-image">
-                        <a href="#"><img src="@{Users.userPhoto(current_user.id)}" style="width:80px;height:80px;" onclick="javascript:document.getElementById('user_profileImage').click(); return false;" /></a>
-                      </div>
-                      <span>${current_user.status.status}</span>
+                    <td style="text-align:center;">
+                      <img src="@{Users.userPhoto(current_user.id)}" style="width:80px;height:80px;" />
                     </td>
                   </tr>
                   <tr>
-                    <td>
-                      #{form @Users.profileImage_upload(), enctype:'multipart/form-data'}
-                      <input type="file" id="user_profileImage" name="profileImage" style="visibility:hidden;position:absolute;top:0;left:0" onchange="javascript:alert('hello');document.forms[0].submit();">
-                      #{/form}
+                    <td style="text-align:center">
+                      <span>${current_user.fullname}</span>
+                      <br />
+
+                      <div>
+                        #{form @Users.profileImage_upload(), id:'profile_image', enctype:'multipart/form-data'}
+                        <input id="user_profileImage" name="profileImage" style="visibility:hidden; width:1px;" type="file" onchange="submitProfileImage();">
+                        <button class="btn" onclick="javascript:document.getElementById('user_profileImage').click(); return false;">프로필 변경</button>
+                        <!-- <input type="submit" name="submit" class="btn" style="width:60px;" value="등록" /> -->
+                        #{/form}
+
+                      </div>
+
+                      <div>
+                        <form action="/users/status_select" method="post">
+                          <select name='status_id' id="status_id" style="width:80px; margin-bottom:0;">
+                            <option></option>
+                            #{list items:all_status, as:'status'}
+
+                            <option value='${status.id}' #{if status.id == current_user.status.id}selected#{/if}>${status.status}</option>
+
+                            #{/list}
+                          </select>
+                          <input type="submit" class="btn" id="signin" value="변경" />
+                        </form>
+                      </div>
+
                     </td>
                   </tr>
                 </table>
+                <br />
 
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/logout">로그아웃</a></li>
 
               </ul>
             </li>
@@ -82,16 +103,23 @@
             #{else}
             <li class="dropdown" id="signin-menu">
               <a href="#signin-menu" class="dropdown-toggle" data-toggle="dropdown">
-                Sign in
+                로그인
                 <b class="caret"></b>
               </a>
-
               <ul class="dropdown-menu">
                 #{include 'Secure/signin.html' /}
               </ul>
-
             </li>
 
+            <li class="dropdown" id="signup-menu">
+              <a href="#signup-menu" class="dropdown-toggle" data-toggle="dropdown">
+                사용자 등록
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                #{include 'Secure/signup.html' /}
+              </ul>
+            </li>
             #{/else}
           </ul>
 
@@ -103,30 +131,35 @@
     <div class="container">
       #{doLayout /}
     </div>
-    
+
     <script type="text/javascript">
-      function notify(flash_message){
-      // jQuery: reference div, load in message, and fade in
-      var flash_div = $(".flash_html");
-      flash_div.html(flash_message);
-      flash_div.attr('class', 'flash_ajax');
-      flash_div.fadeIn("fast");
-      
-      // use Javascript timeout function to delay calling
-      // our jQuery fadeOut, and hide
-      setTimeout(function(){
-      flash_div.fadeOut("fast", function(){
-      flash_div.html("");
-      flash_div.attr('class', 'flash_html');
-      flash_div.hide();
-      })
-      }, 2000);
-      }
-      var flash_message = $.trim($(".flash_html").html());
-      // call our flash display function
-      if (flash_message != "") {
-      notify(flash_message);
-      }
+              function notify(flash_message) {
+                // jQuery: reference div, load in message, and fade in
+                var flash_div = $(".flash_html");
+                flash_div.html(flash_message);
+                flash_div.attr('class', 'flash_ajax');
+                flash_div.fadeIn("fast");
+
+                // use Javascript timeout function to delay calling
+                // our jQuery fadeOut, and hide
+                setTimeout(function(){
+                  flash_div.fadeOut("fast", function(){
+                    flash_div.html("");
+                    flash_div.attr('class', 'flash_html');
+                    flash_div.hide();
+                  })
+                }, 2000);
+              }
+
+              var flash_message = $.trim($(".flash_html").html());
+              // call our flash display function
+              if (flash_message != "") {
+                notify(flash_message);
+              }
+
+              function submitProfileImage() {
+                document.forms.profile_image.submit();
+              }
     </script>
 
     <!-- Lazy script loading -->
@@ -135,6 +168,8 @@
     <script src="@{'/public/javascripts/bootstrap-alert.js'}"
             type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/bootstrap-dropdown.js'}"
+            type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/bootstrap-modal.js'}"
             type="text/javascript" charset="${_response_encoding}"></script>
 
   </body>

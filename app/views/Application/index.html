@@ -2,34 +2,6 @@
 	function hideAllReplyForms() {
 	  $('.reply-form').hide();
 	}
-	
-	function sign_up(){
-		var nickname = $('#sign_up_nickname').val();
-		var fullname = $('#sign_up_fullname').val();
-		var pwd = $('#sign_up_pwd').val();
-		var pwd_confirm = $('#sign_up_pwd_confirm').val();
-		if ( pwd != pwd_confirm ){
-			alert('비밀번호와 비밀번호 확인이 서로 맞지 않습니다');
-		}else{
-			$.ajax({
-	            url: "/users/sign_up",
-	            type: 'POST',
-	            data: 'nickname='+ nickname + '&fullname=' + fullname + '&pwd=' + pwd,
-	            error: function(){
-	                return false;
-	            },
-	            success: function(data){
-	            	$('#sign_form').html(data);
-	            }
-	       	});	
-		}
-	}
-	
-	function sign_up_form(){
-		var form = '<div style="padding-right:60px;"><h2 style="text-align:left;">회원가입</h2><p>닉네임(아이디) <input type="text" style="width:180px;" id="sign_up_nickname" /></p><p>실제이름 <input type="text" style="width:180px;" id="sign_up_fullname" /></p><p>비밀번호 <input type="password" style="width:180px;" id="sign_up_pwd" /></p><p>비밀번호 확인 <input type="password" style="width:180px;" id="sign_up_pwd_confirm" /></p><div style="margin-bottom:10px;"><a href="/" class="btn" style="margin-right:30px;">로그인</a><a href="#" onclick="sign_up(); return false;" class="btn btn-primary">가입하기</a></div></div>';
-		$('#sign_form').html(form);
-	}
-	
 </script>
 
 #{extends 'main.html' /}
@@ -53,17 +25,6 @@
 			#{/list}
 			
 		</div>
-                
-		<!-- <div class="span4" style="text-align:center;"> -->
-		<!-- 	<div id="sign_form" style="border-left: 1px solid #c5c5c5; padding:0 0 10px 10px; text-align:right;"> -->
-		<!-- 		#{if current_user == null} -->
-		<!-- 		 	#{include 'Secure/login.html' /} -->
-		<!-- 		 #{/if} -->
-		<!-- 		 #{else} -->
-		<!-- 		 	#{include 'Secure/logon.html' /} -->
-		<!-- 		 #{/else} -->
-		<!-- 	</div> -->
-		<!-- </div> -->
 	</div>
 </div>
 

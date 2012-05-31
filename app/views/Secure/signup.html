@@ -1,0 +1,67 @@
+<script type="text/javascript">
+  function sign_up(){
+    var nickname = $('#sign_up_nickname').val();
+    var fullname = $('#sign_up_fullname').val();
+    var pwd = $('#sign_up_pwd').val();
+    var pwd_confirm = $('#sign_up_pwd_confirm').val();
+    if ( pwd != pwd_confirm ){
+      alert('비밀번호와 비밀번호 확인이 서로 맞지 않습니다');
+    }else{
+      $.ajax({
+        url: "/users/sign_up",
+        type: 'POST',
+        data: 'nickname='+ nickname + '&fullname=' + fullname + '&pwd=' + pwd,
+        error: function(){
+          return false;
+        },
+        success: function(data){
+          $('#sign_form').html(data);
+        }
+      });
+    }
+  }
+</script>
+
+<form action="/users/sign_up" method="post" class="well">
+<table>
+  <tr>
+    <td>아이디</td>
+  </tr>
+  <tr>
+    <td>
+      <input type="text" name="nickname">
+    </td>
+  </tr>
+
+  <tr>
+    <td>사용자명</td>
+  </tr>
+  <td>
+    <input type="text" name="fullname">
+  </td>
+
+  <tr>
+    <tr>
+      <td>비밀번호</td>
+    </tr>
+    <td>
+      <input type="password" name="pwd">
+    </td>
+  </tr>
+
+  <tr>
+    <td>비밀번호 확인</td>
+  </tr>
+  <tr>
+    <td>
+      <input type="password" name="pwd_confirm">
+    </td>
+  </tr>
+
+  <tr>
+    <td style="text-align:center;">
+      <input type="submit" class="btn btn-primary" value="등록" />
+    </td>
+  </tr>
+</table>
+</form>
