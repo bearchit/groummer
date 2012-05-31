@@ -33,36 +33,47 @@ public class Application extends Controller {
   }
 
   public static void post(String content, Boolean anonymous) {
-    User user;
 
-    if(anonymous == null || anonymous == false)
-      user = User.find("byNickname", Security.connected()).first();
-    else
-      user = User.anonymous();
+      if(!content.isEmpty()) {
+          User user;
 
-    if(user != null) {
-        new Post(user, content).save();
-        flash("message", "등록 완료");
-    }else{
-        flash("message", "글쓰기는 로그인 후에 가능합니다");
-    }
+          if(anonymous == null || anonymous == false)
+              user = User.find("byNickname", Security.connected()).first();
+          else
+              user = User.anonymous();
+
+          if(user != null) {
+              new Post(user, content).save();
+              flash("message", "등록 완료");
+          }else{
+              flash("message", "글쓰기는 로그인 후에 가능합니다");
+          }
+      } else {
+          flash("message", "내용을 입력해 주세요");
+      }
+
     index();
   }
 
   public static void postComment(Long postId, String content, Boolean anonymous) {
     User user;
 
-    if(anonymous == null || anonymous == false)
-      user = User.find("byNickname", Security.connected()).first();
-    else
-      user = User.anonymous();
+    if(!content.isEmpty()) {
 
-    if(user != null) {
-      Post post = Post.findById(postId);
-      post.addComment(user, content);
-      flash("message", "등록 완료");
-    }else{
-        flash("message", "덧글은 로그인 후 가능합니다");
+        if(anonymous == null || anonymous == false)
+            user = User.find("byNickname", Security.connected()).first();
+        else
+            user = User.anonymous();
+
+        if(user != null) {
+            Post post = Post.findById(postId);
+            post.addComment(user, content);
+            flash("message", "등록 완료");
+        }else{
+            flash("message", "덧글은 로그인 후 가능합니다");
+        }
+    } else {
+        flash("message", "내용을 입력해 주세요");
     }
     index();
   }
