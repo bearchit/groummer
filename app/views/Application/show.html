@@ -1,0 +1,91 @@
+#{extends 'main.html' /}
+
+<script language="javascript">
+  function hideAllReplyForms() {
+  $('.reply-form').hide();
+  }
+</script>
+
+<div class="row">
+  <div style="display:inline-block; border: 1px solid #c5c5c5; padding:20px;">
+      <div class="span12">
+      <table width="100%" style="text-align:center;">
+        <tr>
+          <td style="width:10%; padding:10px 0 10px 0; vertical-align:center;">
+            <img src="@{Users.userPhoto(post.user.id)}" style="width:50px;height:50px;" />
+            <br />
+            <span class="custom-blue" style="font-weight:bold;">${post.user.nickname}</span>
+            <br />
+            <!-- <span id="status_user_${post.user.id}" class="badge badge-info">${post.user.status.status}</span> -->
+          </td>
+          <td style="width:80%; text-align:left; padding-bottom:20px;  padding-left:30px; vertical-align:center;">
+            ${post.content}&nbsp;<a href="#" onclick="kakao(${request.url}); return false;" id="kakao"><img src="/public/images/kakao.jpg" style="height:45px;" /></a>&nbsp;<a href="/posts/add_post_likes?postId=${post.id}" class="btn btn-info"><i class="icon-thumbs-up icon-white"></i>&nbsp;추천 ${post.post_likes.size()}</a> 
+            <br />${post.createdAt}
+            <br />
+            #{if post.post_likes.size() != 0}
+            이 글을 추천한 사람 : 
+            #{/if}
+            #{list items:post.post_likes, as:'post_like'}
+            ${post_like.user.nickname}, 
+            #{/list} 
+          </td>
+          <td style="width:10%; vertical-align:center; padding-bottom:20px; ">
+            <a href="#" onclick="hideAllReplyForms(); $('#post-reply_${post.id}').toggle(); return false;">Reply</a>
+          </td>
+        </tr>
+        #{if post.comments}
+        #{list items:post.comments, as:'comment'}
+        <tr>
+          <td style="width:10%;"></td>
+          <td colspan="2" style=" width:80%; text-align:left;">
+            <div style="float:left;">
+	      <img src="@{Users.userPhoto(comment.user.id)}" style="width:50px;height:50px;" />
+              <br />
+              <!-- <span id="status_user_${post.user.id}" class="badge badge-info">${post.user.status.status}</span> -->
+            </div>
+            <div style="float:left; margin-left:10px;">
+	      <span class="custom-blue" style="font-weight:bold; font-size:15px;"> ${comment.user.nickname}</span>
+              <br />
+
+              
+	      ${comment.content.escape().nl2br()}
+	      <a href="/comments/add_comment_likes?commentId=${comment.id}" class="btn">추천 ${comment.comment_likes.size()}</a>
+
+	      <br />${comment.createdAt}
+	      <br />
+	      #{if comment.comment_likes.size() != 0}
+	      이 덧글을 추천한 사람 : 
+	      #{/if}
+	      #{list items:comment.comment_likes, as:'comment_like'}
+	      ${comment_like.user.nickname}, 
+	      #{/list} 
+            </div>
+          </td>
+        </tr>
+        #{/list}
+        #{/if}
+        <tr id="post-reply_${post.id}" style="display:none;">
+          #{form @Application.postComment(post.id)}
+          <td style="width:10%;">Replying to ${post.user.nickname}:</td>
+          <td style="width:80%; padding-bottom:10px; text-align:left;">
+            <input type="checkbox" id="anonymous" name="anonymous" />&nbsp;익명<br />
+            <textarea name="content" id="content" style="width:90%; height:35px; margin-bottom:0;"></textarea>
+          </td>
+          <td style="width:10%;">
+            <input type="submit" class="btn btn-primary" style="width:80%; height:35px;" value="등록" />
+          </td>
+          #{/form}
+        </tr>
+        
+
+        
+      </table>
+    </div>
+  </div> 
+</div>
+
+<div class="row">
+  <div class="span12" style="text-align:center;">
+    <a href="@{Application.index}" class="btn btn-primary" style="width:120px; vertical-align:middle; line-height:40px;">돌아가기</a>
+  </div>
+</div>
