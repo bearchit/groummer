@@ -87,7 +87,7 @@ public class Application extends Controller {
 	User user = User.find("byNickname", Security.connected()).first();
 	Comment comment = Comment.findById(commentId);
 	CommentLike comment_like = CommentLike.find("byUserAndComment",user, comment).first();
-	if(comment_like == null && comment.user != user){ //내가 추천한적 없고 글도 내가 안쓴 정상 flow
+	if(user != null && comment_like == null && comment.user != user){ //내가 추천한적 없고 글도 내가 안쓴 정상 flow
 		comment.addCommentLike(user);
 	}else if(comment.user == user){//본인 글
 		flash("message", "본인 글에는 추천할 수 없습니다"); 
