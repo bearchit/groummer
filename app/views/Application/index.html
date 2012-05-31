@@ -138,6 +138,13 @@
 						<td style="width:80%; text-align:left; padding-bottom:20px;  padding-left:30px; vertical-align:center;">
 							${post.content} <a href="/posts/add_post_likes?postId=${post.id}" class="btn">추천 ${post.post_likes.size()}</a> 
 							<br />${post.createdAt}
+							<br />
+							#{if post.post_likes.size() != 0}
+								이 글을 추천한 사람 : 
+							#{/if}
+							#{list items:post.post_likes, as:'post_like'}
+								${post_like.user.nickname}, 
+							#{/list} 
 						</td>
 						<td style="width:10%; vertical-align:center; padding-bottom:20px; ">
 							<a href="#" onclick="hideAllReplyForms(); $('#post-reply_${post.id}').toggle(); return false;">Reply</a>
@@ -155,6 +162,14 @@
 								<span class="custom-blue" style="font-weight:bold; font-size:15px;"> ${comment.user.nickname}</span><br />
 								${comment.content.escape().nl2br()}
 								<a href="/comments/add_comment_likes?commentId=${comment.id}" class="btn">추천 ${comment.comment_likes.size()}</a>
+								<br />${comment.createdAt}
+								<br />
+								#{if comment.comment_likes.size() != 0}
+									이 덧글을 추천한 사람 : 
+								#{/if}
+								#{list items:comment.comment_likes, as:'comment_like'}
+									${comment_like.user.nickname}, 
+								#{/list} 
 								</div>
 							</td>
 						</tr>
