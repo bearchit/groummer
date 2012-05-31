@@ -19,7 +19,7 @@
             <!-- <span id="status_user_${post.user.id}" class="badge badge-info">${post.user.status.status}</span> -->
           </td>
           <td style="width:80%; text-align:left; padding-bottom:20px;  padding-left:30px; vertical-align:center;">
-            ${post.content}&nbsp;<a href="#" onclick="kakao(${request.url}); return false;" id="kakao"><img src="/public/images/kakao.jpg" style="height:45px;" /></a>&nbsp;<a href="/posts/add_post_likes?postId=${post.id}" class="btn btn-info"><i class="icon-thumbs-up icon-white"></i>&nbsp;추천 ${post.post_likes.size()}</a> 
+            ${post.content}&nbsp;<a href="#" onclick="kakao('/posts/${post.id}'); return false;"><img src="/public/images/kakao.jpg" style="height:45px;" /></a>&nbsp;<a href="/posts/add_post_likes?postId=${post.id}" class="btn btn-info"><i class="icon-thumbs-up icon-white"></i>&nbsp;추천 ${post.post_likes.size()}</a> 
             <br />${post.createdAt}
             <br />
             #{if post.post_likes.size() != 0}
