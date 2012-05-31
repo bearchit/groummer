@@ -32,6 +32,11 @@ public class Application extends Controller {
     render(posts, users);
   }
 
+    public static void show(Long id) {
+        Post post = Post.findById(id);
+        render(post);
+    }
+
   public static void post(String content, Boolean anonymous) {
 
       if(!content.isEmpty()) {

@@ -26,16 +26,28 @@
     $('.dropdown-toggle').dropdown();
   });
   $(function() {
-	var msg = "그룹을 위한 커뮤니티, 그루머";
-	var url = "http://218.38.12.163:9000/";
-	var appid = "http://218.38.12.163:9000/";
-	var appver = "2.0";
-	var appname = "Groummer";
-	var link = new com.kakao.talk.KakaoLink(msg, url, appid, appver, appname);
-	       $("#kakao").click(function() {// button click event
-		        link.execute();
-	       });
-	});
+    var msg = "그룹을 위한 커뮤니티, 그루머";
+    var url = "http://218.38.12.163:9000/";
+    var appid = "http://218.38.12.163:9000/";
+    var appver = "2.0";
+    var appname = "Groummer";
+    var link = new com.kakao.talk.KakaoLink(msg, url, appid, appver, appname);
+    $("#kakao").click(function() {// button click event
+      link.execute();
+    });
+  });
+
+
+
+function kakao(url) {
+  var msg = "그룹을 위한 커뮤니티, 그루머";
+  var url = url;
+  var appid = url;
+  var appver = "2.0";
+  var appname = "Groummer";
+  var link = new com.kakao.talk.KakaoLink(msg, url, appid, appver, appname);
+  link.execute();
+}
     </script>
 
   </head>
@@ -52,7 +64,7 @@
         <div class="container">
 
           <a class="brand" style="margin-top:5px;" href="/">${appName}</a>
-		  <a href="#" onclick="return false;" id="kakao"><img src="public/images/kakao.jpg" style="height:45px;" /></a>
+        <a href="#" onclick="return false;" id="kakao"><img src="/public/images/kakao.jpg" style="height:45px;" /></a>
 
           <!-- User info -->
           <ul class="nav pull-right">
