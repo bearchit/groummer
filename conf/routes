@@ -7,14 +7,12 @@
 # Home page
 GET     /                                       Application.index
 
+POST    /posts                                  Application.post
 POST    /posts/{postId}/comments                Application.postComment
 
 POST     /users/sign_up                Users.sign_up
-
 POST     /users/status_select                Users.status_select
-
 POST		/users/profileimage_upload		Users.profileimage_upload
-
 GET		/users/delete_status					Users.delete_status
 
 GET    /posts/add_post_likes                Application.PostLike
